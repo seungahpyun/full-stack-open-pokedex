@@ -12,7 +12,7 @@ jobs:
         uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy to fly.io
         if: ${{ github.event_name == 'push' && !contains(toJson(github.event.commits.*.message), '#skip') }}
-        run: flyctl deploy --remote-only
+        run: flyctl deploy -a your-app-name --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       - name: Successful deploy
@@ -21,7 +21,7 @@ jobs:
         with:
           severity: info
           description: New version deployed successfully!
-          details: to https://summer-wood-2718.fly.dev/ by hoangduong-coder
+          details: to https://long-butterfly-9130.fly.dev/
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Failed deploy
         uses: rjstone/discord-webhook-notify@v1
@@ -29,5 +29,5 @@ jobs:
         with:
           severity: error
           description: Cannot deploy new version!
-          details: hoangduong-coder broke the build ${{ github.event.head_commit.url }}!
+          details: ${{ github.event.head_commit.url }}!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
