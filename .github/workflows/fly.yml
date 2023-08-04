@@ -13,3 +13,19 @@ jobs:
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: Successful deploy
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ github.event_name == 'push' && success()}}
+        with:
+          severity: info
+          description: New version deployed successfully!
+          details: to https://summer-wood-2718.fly.dev/ by hoangduong-coder
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Failed deploy
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ github.event_name == 'push' && failure()}}
+        with:
+          severity: error
+          description: Cannot deploy new version!
+          details: hoangduong-coder broke the build ${{ github.event.head_commit.url }}!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
