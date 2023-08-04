@@ -11,6 +11,6 @@ jobs:
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v3
         with:
-          url: https://long-butterfly-9130/health
+          url: https://long-butterfly-9130.fly.dev/health
           max-attempts: 3
           retry-delay: 5s
