@@ -6,6 +6,9 @@
 app = "long-butterfly-9130"
 primary_region = "ams"
 
+[env]
+  PORT = "8080"
+
 [deploy]
   release_command = "npm run build"
 
